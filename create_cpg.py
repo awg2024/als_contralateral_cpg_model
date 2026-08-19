@@ -1,5 +1,6 @@
 #!/usr/bin/env python
-import nest
+import nest  # injection done before import nest 
+import time 
 import numpy as np
 import sys
 import pylab
@@ -8,7 +9,6 @@ import matplotlib.pyplot as plt
 import random
 import csv 
 import os
-import time
 import start_simulation as ss
 import pickle, yaml
 import pandas as pd

@@ -22,7 +22,8 @@ class nest_start():
         #nest.Install("nestml_gap_dopa_module")
         nest.set_verbosity('M_ERROR')
         nest.ResetKernel()
-        nest.Install("nestml_aeif_cond_beta_module")
+        nest.Install("nestml_aeif_cond_beta_module") # module named due to reconfiguring in the installation. 
+
 
         # optimum CPU threads: 16 4.95 s for 500ms. 
         nest.SetKernelStatus({"local_num_threads":16})
