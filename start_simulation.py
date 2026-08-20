@@ -22,6 +22,7 @@ class nest_start():
         #nest.Install("nestml_gap_dopa_module")
         nest.set_verbosity('M_ERROR')
         nest.ResetKernel()
+
         nest.Install("nestml_aeif_cond_beta_module") # module named due to reconfiguring in the installation. 
 
 
