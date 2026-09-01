@@ -1,12 +1,11 @@
 import os
-from pathlib import Path
 
 from pynestml.frontend.pynestml_frontend import generate_nest_target
 
 
 input_path = (
     "/home/gray2/Desktop/nest_als/"
-    "AngusGray_als_contralateral_cpg_model/"
+    "als_contralateral_cpg_model/"
     "Installer_files/aeif_cond_beta.nestml"
 )
 
@@ -20,10 +19,14 @@ install_path = (
     "nest_models/aeif_cond_beta_install"
 )
 
-# This is the ACTUAL NEST prefix containing bin/nest-config
-nest_path = os.environ["VIRTUAL_ENV"]
+# NEW NEST installation
+nest_path = "/home/gray2/Desktop/nest_als/nest_3.10_local"
 
 print("Using NEST prefix:", nest_path)
+print(
+    "Using nest-config:",
+    os.path.join(nest_path, "bin", "nest-config")
+)
 
 generate_nest_target(
     input_path=input_path,

@@ -1,8 +1,8 @@
 #Simulation parameters
 delta_clock: .1 #Simulation time step (ms) for the loop. 
 seed: 3141774 #Use 0 for a random seed, Control seed: 3141774
-t_steps: 5000 # SIMULATION TIME GLOBAL PARM
-ramp_duration: 5000 # length of ONLINE AND OFFLINE ramp experiments in a simulation 
+t_steps: 10000 # SIMULATION TIME GLOBAL PARM
+ramp_duration: 10000 # length of ONLINE AND OFFLINE ramp experiments in a simulation 
 
 # Online Ramp parameters for Weight and Drive 
 online_ramp_experiment: 0 # taking ramp_duration specified time scaling up DURING the simulation #
@@ -18,11 +18,11 @@ d_start: -180 # specified drive params (pA)
 d_end:  -240 
 
 # Online Stepwise Parameters for Weight and Drive 
-online_stepwise_experiment: 0 #  taking ramp_duration specified time scaling (in a stepwise manner) up DURING the simulation 
-stepwise_weight_experiment: 0 # Are you going to be running a stepwise weight manipulation experiment? 
+online_stepwise_experiment: 1 #  taking ramp_duration specified time scaling (in a stepwise manner) up DURING the simulation 
+stepwise_weight_experiment: 1 # Are you going to be running a stepwise weight manipulation experiment? 
 stepwise_drive_experiment: 0 # Are you going to be running a stepwise descending drive experiment 
 step_scales: [0]  # these are multipliers applied to the baseline synaptic weights of the connection you selected - FOR BOTH WEIGHT AND DRIVE EXPERIMENT  
-step_hold_ms: 5000   #  the duration taken for each stepwise  - for both experiments 
+step_hold_ms: 10000   #  the duration taken for each stepwise  - for both experiments 
 online_stepwise_weight: 
    - 'custom_v3_rg_L' # V3 contralateral weight specified
    - 'custom_v3_rg_R'

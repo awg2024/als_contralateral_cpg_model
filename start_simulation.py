@@ -23,10 +23,20 @@ class nest_start():
         nest.set_verbosity('M_ERROR')
         nest.ResetKernel()
 
-        nest.Install("nestml_aeif_cond_beta_module") # module named due to reconfiguring in the installation. 
+        # Freshly rebuilt NESTML module
+        nest.Install(
+            "/home/gray2/Desktop/nest_als/"
+            "nest_models/aeif_cond_beta_component/build/"
+            "nestml_aeif_cond_beta_module.so"
+        )
 
+        # Verify that our generated neuron is actually registered
+        print(
+            "aeif beta models:",
+            [m for m in nest.node_models if "aeif_cond_beta" in m]
+        )
 
-        # optimum CPU threads: 16 4.95 s for 500ms. 
+        # optimum CPU threads: 16 4.95 s for 500ms in Jeeves laboratory. 
         nest.SetKernelStatus({"local_num_threads":16})
         
         nest.SetKernelStatus({"resolution":nn.time_resolution})
@@ -34,7 +44,4 @@ class nest_start():
         #nest.SetKernelStatus({'print_time': True})
         plt.rcParams.update({'font.size': 20})
         nest.GetKernelStatus("recording_backends")
-
-
-
 

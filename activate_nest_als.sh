@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-PROJECT_ROOT="$HOME/Desktop/nest_als/AngusGray_als_contralateral_cpg_model"
+PROJECT_ROOT="$HOME/Desktop/nest_als/als_contralateral_cpg_model"
 VENV="$PROJECT_ROOT/nest_als"
 LOCAL_PREFIX="$HOME/local"
 
