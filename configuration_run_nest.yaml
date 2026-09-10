@@ -18,16 +18,16 @@ d_start: -180 # specified drive params (pA)
 d_end:  -240 
 
 # Online Stepwise Parameters for Weight and Drive 
-online_stepwise_experiment: 1 #  taking ramp_duration specified time scaling (in a stepwise manner) up DURING the simulation 
-stepwise_weight_experiment: 1 # Are you going to be running a stepwise weight manipulation experiment? 
+online_stepwise_experiment: 0 #  taking ramp_duration specified time scaling (in a stepwise manner) up DURING the simulation 
+stepwise_weight_experiment: 0 # Are you going to be running a stepwise weight manipulation experiment? 
 stepwise_drive_experiment: 0 # Are you going to be running a stepwise descending drive experiment 
 step_scales: [0]  # these are multipliers applied to the baseline synaptic weights of the connection you selected - FOR BOTH WEIGHT AND DRIVE EXPERIMENT  
 step_hold_ms: 10000   #  the duration taken for each stepwise  - for both experiments 
 online_stepwise_weight: 
-   - 'custom_v3_rg_L' # V3 contralateral weight specified
-   - 'custom_v3_rg_R'
-  # - 'custom_v0d_rg_inh_L' # V0d contralateral weight specified
-  # - 'custom_v0d_rg_inh_R'
+  # - 'custom_v3_rg_L' # V3 contralateral weight specified
+  # - 'custom_v3_rg_R'
+   - 'custom_v0d_rg_inh_L' # V0d contralateral weight specified
+   - 'custom_v0d_rg_inh_R'
 online_stepwise_drive_targets:  #  what weight targets are wanting this stepwise experiment to effect?  
    - "L_V3_Flx.v3_bursting" 
    - "L_V3_Ext.v3_bursting"
@@ -38,7 +38,7 @@ days_after_onset: 0 #Healthy = 0; P45 = 45; P63 = 63; P112 = 112 Degeneration Pa
 
 # 0 = Symmetric Degeneration of both ipsilateral and commmissural interneurons 
 # 1 = Asymmetric Degeneration of ipsi and commisssural interneurons 
-asymmetric_onset: 0 
+asymmetric_onset: 1 
 
 asym_side: "L" # If yes (1) what side are we asymmetrically degenerating? "R" or "L". If 0 this condition is ignored. 
 

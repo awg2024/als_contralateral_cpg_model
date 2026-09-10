@@ -110,10 +110,31 @@ METRIC_COLUMN_LABELS = [
     "Inter-Phase (Left MNP1 vs Right MNP1)", # 10
 ]
 
-# =========================================
-# CLEAN TERMINAL OUTPUT
-# Only summary tables and p-values are printed.
-# =========================================
+
+import numpy as np
+
+def circular_cv(angles, degrees=True):
+    """Circular standard deviation (Mardia): sigma = sqrt(-2 * ln(R)), where R is mean resultant length."""
+   
+    angles = np.asarray(angles, dtype=float)
+    angles = angles[~np.isnan(angles)]
+
+    if len(angles) == 0:
+        return np.nan, np.nan
+    rads = np.deg2rad(angles) if degrees else angles
+
+    cos_mean = np.nanmean(np.cos(rads))
+    sin_mean = np.nanmean(np.sin(rads))
+    R = np.sqrt(cos_mean**2 + sin_mean**2)
+
+    if R > 0:
+        cv = np.sqrt(-2 * np.log(R))
+    else:
+        cv = np.nan
+
+
+    return cv, R
+
 def load_bio_phase(systemic_path):
     df = pd.read_csv(systemic_path)
 
@@ -584,13 +605,16 @@ def compute_intra_phase_per_cycle(flx_file, ext_file, pop_type):
     if not cycle_phases:
         return [], np.nan
  
-    # Circular mean
+        # Circular mean
     rads      = np.deg2rad(cycle_phases)
     mean_rad  = np.angle(np.mean(np.exp(1j * rads))) % (2 * np.pi)
     mean_deg  = float(np.degrees(mean_rad))
     mean_deg  = 360 - mean_deg if mean_deg > 180 else mean_deg
- 
-    return cycle_phases, mean_deg
+
+    # Circular coefficient of variation
+    cv, R = circular_cv(cycle_phases, degrees=True)
+
+    return cycle_phases, mean_deg, cv
 
 def plot_intra_phase_hemicord(intra_phase_dict, folders, output_dir, pop_type, stats_dir):
     n_folders     = len(folders)
@@ -2027,15 +2051,19 @@ if __name__ == "__main__":
         extracted_values_inter[folder] = arr.tolist()
 
     # Inter-phase summary table
-    print(f"\n  {'Condition':<20}  {'n':>4}  {'Mean (°)':>10}  {'SD (°)':>10}")
-    print(f"  {'-'*20}  {'-'*4}  {'-'*10}  {'-'*10}")
+    print(f"\n  {'Condition':<20}  {'n':>4}  {'Mean (°)':>10}  {'SD (°)':>10}  {'CV/Sigma':>8}")
+    print(f"  {'-'*20}  {'-'*4}  {'-'*10}  {'-'*10}  {'-'*8}")
+    inter_phase_cv = {}
     for folder in folders:
         label = folder.split('/')[-1].replace('P0', 'Healthy')
         vals  = [v for v in extracted_values_inter[folder] if not np.isnan(v)]
         if vals:
-            print(f"  {label:<20}  {len(vals):>4}  {np.mean(vals):>10.3f}  {np.std(vals):>10.3f}")
+            cv, R = circular_cv(vals, degrees=True)
+            inter_phase_cv[folder] = cv
+            print(f"  {label:<20}  {len(vals):>4}  {np.mean(vals):>10.3f}  {np.std(vals):>10.3f}  {cv:>8.5f}")
         else:
-            print(f"  {label:<20}  {'0':>4}  {'NaN':>10}  {'NaN':>10}")
+            inter_phase_cv[folder] = np.nan
+            print(f"  {label:<20}  {'0':>4}  {'NaN':>10}  {'NaN':>10}  {'NaN':>8}")
 
 
     
@@ -2054,12 +2082,17 @@ if __name__ == "__main__":
                     continue
                 flx_file = file_list[0]   # _output_mnp1.csv  (flexor)
                 ext_file = file_list[1]   # _output_mnp2.csv  (extensor)
-                cycle_phases, mean_deg = compute_intra_phase_per_cycle(
+            
+                cycle_phases, mean_deg, cv = compute_intra_phase_per_cycle(
                     flx_file, ext_file, pop_type
                 )
                 all_cycle_phases.extend(cycle_phases)
  
             intra_phase_dict[side][folder] = all_cycle_phases
+
+            # Recompute CV/sigma on the pooled cycles across all trials, not the last trial only
+            cv, R = circular_cv(all_cycle_phases, degrees=True)
+
  
             tp_label = folder.split('/')[-1].replace('P0', 'Healthy')
             n        = len(all_cycle_phases)
@@ -2067,7 +2100,8 @@ if __name__ == "__main__":
                 print(
                     f"  {side:<6} {tp_label:<15}  n={n:>4} cycles  "
                     f"mean={np.nanmean(all_cycle_phases):.1f}°  "
-                    f"SD={np.nanstd(all_cycle_phases):.1f}°"
+                    f"SD={np.nanstd(all_cycle_phases):.1f}°  "
+                    f"CV={cv:.5f}"
                 )
             else:
                 print(f"  {side:<6} {tp_label:<15}  no cycles detected")
