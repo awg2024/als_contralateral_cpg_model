@@ -38,11 +38,15 @@ days_after_onset: 0 #Healthy = 0; P45 = 45; P63 = 63; P112 = 112 Degeneration Pa
 
 # 0 = Symmetric Degeneration of both ipsilateral and commmissural interneurons 
 # 1 = Asymmetric Degeneration of ipsi and commisssural interneurons 
-asymmetric_onset: 1 
+asymmetric_onset: 0
+asym_side: "L" # If yes ^ (1) what side are we asymmetrically degenerating? "R" or "L". If 0 this condition is ignored. 
 
-asym_side: "L" # If yes (1) what side are we asymmetrically degenerating? "R" or "L". If 0 this condition is ignored. 
+v0d_commissural_degeneration: 1 # 0 = V0d remain intact. 1 = degeneration. REMOOVEEE!1
 
-v0d_commissural_degeneration: 1 # 0 = V0d remain intact. 1 = degeneration. 
+v0d_commissural_cell_loss: 1 # 0 = V0d remain cell population remain intact. 1 =  cell population degeneration. 
+v0d_commissural_synaptic_loss: 1 # 0 = V0d remain synaptic connections remain intact. 1 =  cell synaptic degeneration. 
+
+
 v3_commissural_hyperexcitation: 1 # 0 = V3 do not get hyperexcited. 1 = hyperexcitation. 
 
 synaptically_stabilized: 0 #0 = No; 1 = Yes #Test exogenous intervention
