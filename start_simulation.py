@@ -13,6 +13,7 @@ import scipy.fftpack
 import time
 import numpy as np
 import set_network_params as netparams
+import os 
 
 nn=netparams.neural_network()
 
@@ -23,13 +24,25 @@ class nest_start():
         nest.set_verbosity('M_ERROR')
         nest.ResetKernel()
 
+
+        
+
         # Freshly rebuilt NESTML module
-        nest.Install(
-            "/home/gray2/Desktop/nest_als/"
-            "nest_models/aeif_cond_beta_component/build/"
-            "nestml_aeif_cond_beta_module.so"
+        module_dir = (
+            "/Users/angusgray/Desktop/V0d-Publication/github.nosync/"
+            "als_contralateral_cpg_model/Installer_files/"
+            "aeif_cond_beta_install"
         )
 
+        # Use the actual directory containing the compiled library
+        os.environ["DYLD_LIBRARY_PATH"] = (
+            module_dir + ":" + os.environ.get("DYLD_LIBRARY_PATH", "")
+        )
+
+        nest.Install("nestml_aeif_cond_beta_module")
+
+
+        
         # Verify that our generated neuron is actually registered
         print(
             "aeif beta models:",

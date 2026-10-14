@@ -130,30 +130,29 @@ class commissural_population:
             }
 
 
-            if netparams.v0d_commissural_degeneration == 1: 
+            if netparams.v0d_commissural_cell_loss == 1 or netparams.v0d_commissural_synaptic_loss == 1: 
                 
                 if netparams.days == 112:
 
                     if pop_type == "V0D":
-                        # PRIMARY intervention: more V0D degeneration
-                        # Intrinsic changes + structural loss together
+                        # PRIMARY intervention more V0d intrinsic dysfunction with a late stage of v0d degeneration 
                         
-                        # 1. Raise threshold — harder to recruit
+                        # Raise threshold — harder to recruit
                         neuron_params['V_th'] = nest.random.normal(
                             netparams.V_th_mean_bursting + 2,
                             netparams.V_th_std_bursting * 0.3
                         )
-                        # 2. Increase C_m — slower integration, less responsive
+                        # Increase C_m — slower integration, less responsive
                         neuron_params['C_m'] = nest.random.normal(
-                            netparams.C_m_bursting_mean * 1.15,  # 30% heavier membrane
+                            netparams.C_m_bursting_mean * 1.15,  # 15% heavier membrane
                             netparams.C_m_bursting_std
                         )
-                        # 3. Lengthen refractory period — fires less frequently
+                        # Lengthen refractory period — fires less frequently
                         neuron_params['t_ref'] = nest.random.normal(
                             netparams.t_ref_mean * 1.2,
                             netparams.t_ref_std
                         )
-                        # 4. Moderate adaptation — not too deep, just reliable
+                        # Moderate adaptation — not too deep, just reliable
                         tau_w_scale = float(np.clip(np.random.normal(0.90, 0.03), 0.82, 0.98))
                         b_scale     = float(np.clip(np.random.normal(1.10, 0.03), 1.00, 1.20))
                         neuron_params['tau_w'] = 130. * tau_w_scale
