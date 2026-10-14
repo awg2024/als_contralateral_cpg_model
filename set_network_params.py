@@ -314,19 +314,13 @@ class neural_network():
                 setattr(self, f"num_motor_neurons_{A}",     150)
          
                # Commissural interneuron degeneration  (V0d) - ONE SIDE 
-                if args['v0d_commissural_cell_loss'] == 1 and args['v0d_commissural_synaptic_loss'] == 1:   # COMBINED SYNAPTIC AND CELLULAR LOSS 
-                    attr_name = f"w_custom_v0d_rg_inh_{A}_mean"
-                    baseline_v0d_strength = getattr(self, attr_name)
-                    setattr(self, f"sparsity_custom_v0d_rg_inh_{A}", 0.12)  # V0d sparsity baseline 0.1275, reducing the sparsity reduced by 2.5%
-                
-                if args['v0d_commissural_cell_loss'] == 1:  # CELLULAR LOSS 
+                if args['v0d_commissural_cell_loss'] == 1:  # CELLULAR LOSS (there's no loss at p45)
                     attr_name = f"w_custom_v0d_rg_inh_{A}_mean"
                     baseline_v0d_strength = getattr(self, attr_name)
                              
                 if args['v0d_commissural_synaptic_loss'] == 1:   # SYNAPTIC LOSS 
                     setattr(self, f"sparsity_custom_v0d_rg_inh_{A}", 0.12)  # V0d sparsity baseline 0.1275, reducing the sparsity reduced by 2.5%
                                 
-
                  # Commissural interneuron degeneration  (V3) - ONE SIDE 
                 if args['v3_commissural_hyperexcitation'] == 1: 
                     attr_name = f"w_custom_v3_rg_{A}_mean"
@@ -367,13 +361,7 @@ class neural_network():
                     setattr(self, f"num_motor_neurons_{side}",     150)
                     setattr(self, f"v0d_pop_size_{side}", 75)                  
 
-                    # Commissural interneuron degeneration (V0d) BOTH SIDES
-                    if args['v0d_commissural_cell_loss'] == 1 and args['v0d_commissural_synaptic_loss'] == 1: 
-                        attr_name = f"w_custom_v0d_rg_inh_{side}_mean"
-                        baseline_v0d_strength = getattr(self, attr_name)
-                        setattr(self, f"sparsity_custom_v0d_rg_inh_{side}", 0.12)  # V0d sparsity baseline 0.1275, reducing the sparsity reduced by 2.5%
-
-                    if args['v0d_commissural_cell_loss'] == 1:  # CELLULAR LOSS 
+                    if args['v0d_commissural_cell_loss'] == 1:  # CELLULAR LOSS (there is no loss at p45)
                         attr_name = f"w_custom_v0d_rg_inh_{side}_mean"
                         baseline_v0d_strength = getattr(self, attr_name)
                                                  
@@ -476,19 +464,11 @@ class neural_network():
 
             
                 # Commissural interneuron degeneration (V0d) ONE SIDE 
-                if args['v0d_commissural_cell_loss'] == 1 and args['v0d_commissural_synaptic_loss'] == 1:    # COMBINED LOSS 
-                    
-                    attr_name = f"w_custom_v0d_rg_inh_{A}_mean"
-                    baseline_v0d_strength = getattr(self, attr_name)
-                    setattr(self, attr_name, baseline_v0d_strength * 0.975)  # 5% loss in synaptic strength from V0d 
-                    setattr(self, f"sparsity_custom_v0d_rg_inh_{A}", 0.11475)  # V0d sparsity baseline 0.1275, reducing the sparsity reduced by 10%
-                    setattr(self, f"v0d_pop_size_{A}", 60)                  # V0d pop size baseline 64, further reducing inhibitory pool
-                        
                 if args['v0d_commissural_cell_loss'] == 1:  # CELLULAR LOSS 
                    
                     attr_name = f"w_custom_v0d_rg_inh_{A}_mean"
                     baseline_v0d_strength = getattr(self, attr_name)
-                    setattr(self, f"v0d_pop_size_{A}", 60)                  # V0d pop size baseline 64, further reducing inhibitory pool
+                    setattr(self, f"v0d_pop_size_{A}", 60)                  # V0d pop size baseline 60, further reducing inhibitory pool (original 75)
                                                                                                     
                 if args['v0d_commissural_synaptic_loss'] == 1:   # SYNAPTIC LOSS 
 
@@ -540,21 +520,12 @@ class neural_network():
                     setattr(self, f"v0c_pop_size_{side}",          15)
                     setattr(self, f"rc_pop_size_{side}",           14)
                     setattr(self, f"num_motor_neurons_{side}",     150)
-                
-                    # Commissural interneuron degeneration (V0d) ONE SIDE 
-                    if args['v0d_commissural_cell_loss'] == 1 and args['v0d_commissural_synaptic_loss'] == 1:    # COMBINED LOSS 
-                                        
-                        attr_name = f"w_custom_v0d_rg_inh_{side}_mean"
-                        baseline_v0d_strength = getattr(self, attr_name)
-                        setattr(self, attr_name, baseline_v0d_strength * 0.975)  # 5% loss in synaptic strength from V0d 
-                        setattr(self, f"sparsity_custom_v0d_rg_inh_{side}", 0.11475)  # V0d sparsity baseline 0.1275, reducing the sparsity reduced by 10%
-                        setattr(self, f"v0d_pop_size_{side}", 60)                  # V0d pop size baseline 64, further reducing inhibitory pool
-                                            
+                    
                     if args['v0d_commissural_cell_loss'] == 1:  # CELLULAR LOSS 
                                        
                         attr_name = f"w_custom_v0d_rg_inh_{side}_mean"
                         baseline_v0d_strength = getattr(self, attr_name)
-                        setattr(self, f"v0d_pop_size_{side}", 60)                  # V0d pop size baseline 64, further reducing inhibitory pool
+                        setattr(self, f"v0d_pop_size_{side}", 60)                  # V0d pop size baseline 60, further reducing inhibitory pool (original 75)
                                                                                                                         
                     if args['v0d_commissural_synaptic_loss'] == 1:   # SYNAPTIC LOSS 
                     
@@ -662,25 +633,12 @@ class neural_network():
                     setattr(self, f"num_motor_neurons_{A}",    107)
                 elif args['mn_intact'] == 1:
                     setattr(self, f"num_motor_neurons_{A}",    150)
-
-
-
-                
-                # Commissural interneuron degeneration (V0d) ONE SIDE 
-                if args['v0d_commissural_cell_loss'] == 1 and args['v0d_commissural_synaptic_loss'] == 1:    # COMBINED LOSS 
-                    
-                    attr_name = f"w_custom_v0d_rg_inh_{A}_mean"
-                    baseline_v0d_strength = getattr(self, attr_name)
-                    setattr(self, attr_name, baseline_v0d_strength * 0.95)  # 5% loss in synaptic strength from V0d 
-                    setattr(self, f"sparsity_custom_v0d_rg_inh_{A}", 0.08)  # V0d sparsity baseline 0.1275, reducing the sparsity
-                    setattr(self, f"v0d_pop_size_{A}", 48)                  # V0d pop size baseline 64, further reducing inhibitory pool
-                    
-                    
+    
                 if args['v0d_commissural_cell_loss'] == 1:  # CELLULAR LOSS 
                    
                     attr_name = f"w_custom_v0d_rg_inh_{A}_mean"
                     baseline_v0d_strength = getattr(self, attr_name)
-                    setattr(self, f"v0d_pop_size_{A}", 48) 
+                    setattr(self, f"v0d_pop_size_{A}", 48)   # cell population degeneration to 48 (original 75)
                                                                                                     
                 if args['v0d_commissural_synaptic_loss'] == 1:   # SYNAPTIC LOSS 
 
@@ -688,7 +646,6 @@ class neural_network():
                     baseline_v0d_strength = getattr(self, attr_name)
                     setattr(self, attr_name, baseline_v0d_strength * 0.95)  # 5% loss in synaptic strength from V0d 
                     setattr(self, f"sparsity_custom_v0d_rg_inh_{A}", 0.08)  # V0d sparsity baseline 0.1275, reducing the sparsity
-
 
                 # V3 Commissural interneuron degeneration - ONE SIDE  
                 if args['v3_commissural_hyperexcitation'] == 1: 
@@ -739,21 +696,12 @@ class neural_network():
                     elif args['mn_intact'] == 1:
                         setattr(self, f"num_motor_neurons_{side}",    150)
 
-                      # Commissural interneuron degeneration (V0d) ONE SIDE 
-                    if args['v0d_commissural_cell_loss'] == 1 and args['v0d_commissural_synaptic_loss'] == 1:    # COMBINED LOSS 
-                                        
-                        attr_name = f"w_custom_v0d_rg_inh_{side}_mean"
-                        baseline_v0d_strength = getattr(self, attr_name)
-                        setattr(self, attr_name, baseline_v0d_strength * 0.95)  # 5% loss in synaptic strength from V0d 
-                        setattr(self, f"sparsity_custom_v0d_rg_inh_{side}", 0.08)  # V0d sparsity baseline 0.1275, reducing the sparsity
-                        setattr(self, f"v0d_pop_size_{side}", 48)                  # V0d pop size baseline 48, further reducing inhibitory pool
-                                        
-                                        
+                      # Commissural interneuron degeneration (V0d) ONE SIDE               
                     if args['v0d_commissural_cell_loss'] == 1:  # CELLULAR LOSS 
                                        
                         attr_name = f"w_custom_v0d_rg_inh_{side}_mean"
                         baseline_v0d_strength = getattr(self, attr_name)
-                        setattr(self, f"v0d_pop_size_{side}", 48) 
+                        setattr(self, f"v0d_pop_size_{side}", 48)  # cellular degeneration to 48 from original 75 
                                                                                                                         
                     if args['v0d_commissural_synaptic_loss'] == 1:   # SYNAPTIC LOSS 
                     
@@ -860,20 +808,12 @@ class neural_network():
                 elif args['mn_intact'] == 1:
                     setattr(self, f"num_motor_neurons_{A}",    150)
 
-                # Commissural interneuron degeneration (V0d) ONE SIDE 
-                if args['v0d_commissural_cell_loss'] == 1 and args['v0d_commissural_synaptic_loss'] == 1:    # COMBINED LOSS 
-                                    
-                    attr_name = f"w_custom_v0d_rg_inh_{A}_mean"
-                    baseline_v0d_strength = getattr(self, attr_name)
-                    setattr(self, attr_name, baseline_v0d_strength * 0.95)  # 5% loss in synaptic strength from V0d 
-                    setattr(self, f"sparsity_custom_v0d_rg_inh_{A}", 0.08)  # V0d sparsity baseline 0.1275, reducing the sparsity
-                    setattr(self, f"v0d_pop_size_{A}", 48)                  # V0d pop size baseline 64, further reducing inhibitory pool
-                                              
+                # Commissural interneuron degeneration (V0d) ONE SIDE                         
                 if args['v0d_commissural_cell_loss'] == 1:  # CELLULAR LOSS 
                                    
                     attr_name = f"w_custom_v0d_rg_inh_{A}_mean"
                     baseline_v0d_strength = getattr(self, attr_name)
-                    setattr(self, f"v0d_pop_size_{A}", 48) 
+                    setattr(self, f"v0d_pop_size_{A}", 48)  # reducing to 48 from 75 original 
                                                                                                                     
                 if args['v0d_commissural_synaptic_loss'] == 1:   # SYNAPTIC LOSS 
                 
@@ -881,7 +821,6 @@ class neural_network():
                     baseline_v0d_strength = getattr(self, attr_name)
                     setattr(self, attr_name, baseline_v0d_strength * 0.95)  # 5% loss in synaptic strength from V0d 
                     setattr(self, f"sparsity_custom_v0d_rg_inh_{A}", 0.08)  # V0d sparsity baseline 0.1275, reducing the sparsity
-
                 
                 if args['v3_commissural_hyperexcitation'] == 1: 
 
@@ -922,21 +861,12 @@ class neural_network():
                     setattr(self, f"v0c_pop_size_{side}",          15)
                     setattr(self, f"rc_pop_size_{side}",           30)
                     setattr(self, f"num_motor_neurons_{side}",    107)
-
-                    # Commissural interneuron degeneration (V0d) ONE SIDE 
-                    if args['v0d_commissural_cell_loss'] == 1 and args['v0d_commissural_synaptic_loss'] == 1:    # COMBINED LOSS 
-                                                            
-                        attr_name = f"w_custom_v0d_rg_inh_{side}_mean"
-                        baseline_v0d_strength = getattr(self, attr_name)
-                        setattr(self, attr_name, baseline_v0d_strength * 0.95)  # 5% loss in synaptic strength from V0d 
-                        setattr(self, f"sparsity_custom_v0d_rg_inh_{side}", 0.08)  # V0d sparsity baseline 0.1275, reducing the sparsity
-                        setattr(self, f"v0d_pop_size_{side}", 48)                  # V0d pop size baseline 48, further reducing inhibitory pool
-                                                                                                
+                            
                     if args['v0d_commissural_cell_loss'] == 1:  # CELLULAR LOSS 
                                                            
                         attr_name = f"w_custom_v0d_rg_inh_{side}_mean"
                         baseline_v0d_strength = getattr(self, attr_name)
-                        setattr(self, f"v0d_pop_size_{side}", 48) 
+                        setattr(self, f"v0d_pop_size_{side}", 48)   # reducing to 48 from 75 
                                                                                                                                             
                     if args['v0d_commissural_synaptic_loss'] == 1:   # SYNAPTIC LOSS 
                                         
