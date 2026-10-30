@@ -325,7 +325,7 @@ class neural_network():
                 if args['v3_commissural_hyperexcitation'] == 1: 
                     attr_name = f"w_custom_v3_rg_{A}_mean"
                     baseline_v3_strength = getattr(self, attr_name)
-                    setattr(self, attr_name, baseline_v3_strength * 1.05)  # 10% increase in synaptic strength from V3
+                    setattr(self, attr_name, baseline_v3_strength * 1.05)  # 5% increase in synaptic strength from V3
             
 
             elif self.asymmetric_onset == 0: 
@@ -372,7 +372,7 @@ class neural_network():
                     if args['v3_commissural_hyperexcitation'] == 1: 
                         attr_name = f"w_custom_v3_rg_{side}_mean"
                         baseline_v3_strength = getattr(self, attr_name)
-                        setattr(self, attr_name, baseline_v3_strength * 1.05)  # 10% increase in synaptic strength from V3
+                        setattr(self, attr_name, baseline_v3_strength * 1.05)  # 5% increase in synaptic strength from V3
                 
                 
                 
@@ -644,7 +644,7 @@ class neural_network():
 
                     attr_name = f"w_custom_v0d_rg_inh_{A}_mean"
                     baseline_v0d_strength = getattr(self, attr_name)
-                    setattr(self, attr_name, baseline_v0d_strength * 0.95)  # 5% loss in synaptic strength from V0d 
+                    setattr(self, attr_name, baseline_v0d_strength * 0.90)  # 10% loss in synaptic strength from V0d 
                     setattr(self, f"sparsity_custom_v0d_rg_inh_{A}", 0.08)  # V0d sparsity baseline 0.1275, reducing the sparsity
 
                 # V3 Commissural interneuron degeneration - ONE SIDE  
@@ -1220,6 +1220,7 @@ class neural_network():
         self.low_locomotion_v0d_right = args['low_locomotion_v0d_right']
         self.low_locomotion_v3_right = args['low_locomotion_v3_right'] # v3 
         self.low_locomotion_v3_left = args['low_locomotion_v3_left'] 
+    
         
         # commissural degeneration params 
         self.v0d_degeneration_plot = args['v0d_degeneration_plot']
@@ -1232,6 +1233,13 @@ class neural_network():
 
         # v3 degeneration flag 
         self.v3_commissural_hyperexcitation = args['v3_commissural_hyperexcitation']
+
+        # v3 connectivity flag 
+        self.v3_connectivity_rg_ext = args["v3_connectivity_rg_ext"]
+
+
+        
+
 
         # online ramp params 
         self.w_start = args['w_start']

@@ -343,10 +343,12 @@ if nn.low_locomotion_v3_left == 1:
     conn.create_connections(L_rg1.rg_exc_bursting, L_V3_Flx.v3_bursting, 'custom_rg_v3_L')        # ipsilateral connection with the mnp1 
     conn.create_connections(L_V3_Flx.v3_bursting, R_rg1.rg_exc_bursting, 'custom_v3_rg_L')   # custom_v3_rg_L Commissural conection 
 
-    # ext-ext
-    conn.create_connections(L_rg2.rg_exc_bursting, L_V3_Ext.v3_bursting, 'custom_rg_v3_L')
-    conn.create_connections(L_V3_Ext.v3_bursting, R_rg2.rg_exc_bursting, 'custom_v3_rg_L') # custom_v3_rg_L
-    
+    if nn.v3_connectivity_rg_ext == 1: 
+        
+        # ext-ext
+        conn.create_connections(L_rg2.rg_exc_bursting, L_V3_Ext.v3_bursting, 'custom_rg_v3_L')
+        conn.create_connections(L_V3_Ext.v3_bursting, R_rg2.rg_exc_bursting, 'custom_v3_rg_L') # custom_v3_rg_L
+        
 
 #Connect rg neurons to V2a excitatory interneuron populations
 conn.create_connections(R_rg1.rg_exc_bursting, R_exc1.exc_inter_tonic,'custom_rg_v2a_R')
@@ -457,9 +459,11 @@ if nn.rgs_connected == 1:
         conn.create_connections(R_rg1.rg_exc_bursting, R_V3_Flx.v3_bursting, 'custom_rg_v3_R')        # ipsilateral connection with the mnp1 
         conn.create_connections(R_V3_Flx.v3_bursting, L_rg1.rg_exc_bursting, 'custom_v3_rg_R')   # custom_v3_mnp_R Commissural conection 
 
-        # ext-ext 
-        conn.create_connections(R_rg2.rg_exc_bursting, R_V3_Ext.v3_bursting, 'custom_rg_v3_R')
-        conn.create_connections(R_V3_Ext.v3_bursting, R_rg2.rg_exc_bursting, 'custom_v3_rg_R') # custom_v3_mnp_R
+        if nn.v3_connectivity_rg_ext == 1:  # connect V3 to rg_ext
+
+            # ext-ext 
+            conn.create_connections(R_rg2.rg_exc_bursting, R_V3_Ext.v3_bursting, 'custom_rg_v3_R')
+            conn.create_connections(R_V3_Ext.v3_bursting, R_rg2.rg_exc_bursting, 'custom_v3_rg_R') # custom_v3_mnp_R
 
 
     # ================================ END OF RIGHT SIDE CPG DEFINITIONS & END OF CONN.CREATE_CONNECTIONS ==========================================================
